@@ -45,18 +45,24 @@
 			console.error('Error loading model:', error);
 		});
 
-		// Add AR button to enter AR mode
-		try {
-			const arButton = THREE.ARButton.createButton(renderer, { requiredFeatures: ['hit-test'] });
-			if (arButton) {
-				document.body.appendChild(arButton);
-				console.log('AR Button created successfully');
-			} else {
-				console.error('ARButton creation failed');
-			}
-		} catch (e) {
-			console.error('WebXR is not supported in this environment:', e);
-			alert('AR is not supported on this device or browser');
+		// Check if AR is supported and create AR button
+		if (navigator.xr) {
+			navigator.xr.isSessionSupported('immersive-ar').then((supported) => {
+				if (supported) {
+					const arButton = THREE.ARButton.createButton(renderer, { requiredFeatures: ['hit-test'] });
+					document.body.appendChild(arButton);
+					console.log('AR Button created successfully');
+				} else {
+					console.log('AR not supported on this device/browser');
+					alert('AR is not supported on this device or browser');
+				}
+			}).catch((error) => {
+				console.error('Error while checking AR support:', error);
+				alert('Error occurred while checking for AR support');
+			});
+		} else {
+			console.error('WebXR not supported in this environment.');
+			alert('WebXR is not supported in this browser.');
 		}
 
 		// Handle window resizing
