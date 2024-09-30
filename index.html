@@ -58,8 +58,8 @@
 					alert('AR is not supported on this device or browser');
 				}
 			}).catch((error) => {
-				console.error('Error while checking AR support:', error);
-				alert('Error occurred while checking for AR support');
+				console.error('Error during AR support check:', error);
+				alert('Error occurred while checking for AR support. See the console for details.');
 			});
 		} else {
 			console.error('WebXR not supported in this environment.');
@@ -93,4 +93,3 @@
 </script>
 </body>
 </html>
-
