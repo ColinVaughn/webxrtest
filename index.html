@@ -10,12 +10,12 @@
 	</style>
 </head>
 <body>
-<!-- Load three.js r149 and its corresponding GLTFLoader and ARButton -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
-<script src="libs/ARButton.js"></script> <!-- Replace with the actual path -->
-<script src="libs/GLTFLoader.js"></script> <!-- Replace with the actual path -->
+<script type="module">
+	// Import necessary modules for Three.js r149
+	import * as THREE from './libs/three.module.js';   // Ensure this is the correct path to your local three.js module
+	import { ARButton } from './libs/ARButton.js';     // Local path to ARButton
+	import { GLTFLoader } from './libs/GLTFLoader.js'; // Local path to GLTFLoader
 
-<script>
 	let scene, camera, renderer;
 
 	// Initialize the scene
@@ -36,7 +36,7 @@
 		document.body.appendChild(renderer.domElement);
 
 		// GLTFLoader for loading GLB models
-		const loader = new THREE.GLTFLoader();
+		const loader = new GLTFLoader();
 		loader.load('3d/1.glb', function(gltf) {
 			const model = gltf.scene;
 			model.position.set(0, 0, -2);  // Adjust the position in front of the camera
@@ -47,7 +47,7 @@
 		});
 
 		// Create ARButton and check for AR support
-		document.body.appendChild(THREE.ARButton.createButton(renderer, {
+		document.body.appendChild(ARButton.createButton(renderer, {
 			requiredFeatures: ['hit-test'],
 			optionalFeatures: ['dom-overlay'],
 			domOverlay: { root: document.body }
